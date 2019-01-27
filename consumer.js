@@ -1,3 +1,5 @@
+//import axios from 'axios';
+
 const Kafka = require('no-kafka');
 
 // Create an instance of the Kafka consumer
@@ -14,6 +16,28 @@ return consumer.init().then(function () {
     return consumer.subscribe('meu-topico', data);
 });
 
+
+/*
+OPÇÃO 1:
+
+const options = {
+  text: "Message from slack bot!!",
+};
+
+axios.post('<SLACK_WEBHOOK_URL>', JSON.stringify(options))
+.then((response) => {
+  console.log('SUCCEEDED: Sent slack webhook: \n', response.data);
+  resolve(response.data);
+})
+.catch((error) => {
+  console.log('FAILED: Send slack webhook', error);
+  reject(new Error('FAILED: Send slack webhook'));
+});
+*/
+
+/*
+OPÇÃO 1:
+*/
 function postMSG(msg){
   // format payload for slack
   var sdata = formatForSlack(msg, chan)
