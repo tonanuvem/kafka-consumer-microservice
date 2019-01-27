@@ -1,0 +1,13 @@
+{
+  "name": "kafka_consumer-microservice",
+  "version": "1.0.0",
+  "description": "Kafka Consumer Node.js on Docker",
+  "author": "To na Nuvem <contato@tonanuvem.net>",
+  "main": "consumer.js",
+  "scripts": {
+    "start": "node consumer.js"
+  },
+  "dependencies": {
+    "no-kafka": "^3.4.3"
+  }
+}
