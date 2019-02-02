@@ -32,7 +32,7 @@ var kafka = require('kafka-node'),
 
 consumer.on('message', function (message) {
     console.log(message);
-    //postMSG_lida_para_o_slack(message)
+    postMSG_lida_para_o_slack(message)
 });
 
 consumer.on('error', function (err) {
@@ -114,10 +114,10 @@ function postMSG_lida_para_o_slack(msg){
 * change "username" per instructions
 * change emoji icon if desired
 */
-function formatForSlack(msg, chan){
+function formatForSlack(msg){
   var payload ={
-    "channel":chan,
-    "username":'app_html',
+    "channel":'#async',
+    "username":'app_kafka_consumer',
     "text": msg,
     "icon_emoji":':ghost:'
   };
