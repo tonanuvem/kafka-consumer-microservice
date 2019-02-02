@@ -21,15 +21,15 @@ var kafka = require('kafka-node'),
     client = new Client({ kafaHost: '10.2.3.102:9092' }),
     topics = [{ topic: topic, partition: 1 }, { topic: topic, partition: 0 }],
     options = { autoCommit: false, fetchMaxWaitMs: 1000, fetchMaxBytes: 1024 * 1024 },
-    consumer = new Consumer(client, topics, options);
-/*
+//    consumer = new Consumer(client, topics, options);
+
     consumer = new Consumer(client,
         [{ topic: 'meu-topico', offset: 0}],
         {
             autoCommit: false
         }
     );
-*/
+
 consumer.on('message', function (message) {
     console.log(message);
     //postMSG_lida_para_o_slack(message)
