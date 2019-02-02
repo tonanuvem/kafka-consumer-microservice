@@ -4,3 +4,7 @@ services:
     build: .
     volumes:
      - .:/usr/src/app
+     - /usr/app/node_modules
+    environment:
+      KAFKA_HOST: kafka
+      KAFKA_PORT: 9092
