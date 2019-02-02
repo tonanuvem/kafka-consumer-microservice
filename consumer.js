@@ -7,12 +7,15 @@ const consumer = new Kafka.SimpleConsumer({"connectionString":"localhost:9092"})
 var data = function (messageSet) {
     messageSet.forEach(function (m) {
         var mensagem = m.message.value.toString('utf8');
+        console.log(`Lida a msg: ${mensagem}`);
         postMSG_lida_para_o_slack(mensagem);
+        console.log(`Postada a msg: ${mensagem}`);
     });
 };
 
 // Subscribe to the Kafka topic
 return consumer.init().then(function () {
+    console.log(`Inicio... subscrevendo no topico`);
     return consumer.subscribe('meu-topico', data);
 });
 
