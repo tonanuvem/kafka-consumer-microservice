@@ -32,7 +32,7 @@ var kafka = require('kafka-node'),
 */
 consumer.on('message', function (message) {
     console.log(message);
-    postMSG_lida_para_o_slack(message)
+    //postMSG_lida_para_o_slack(message)
 });
 
 consumer.on('error', function (err) {
