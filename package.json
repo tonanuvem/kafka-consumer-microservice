@@ -8,6 +8,8 @@
     "start": "node consumer.js"
   },
   "dependencies": {
-    "no-kafka": "^3.4.3"
+    "no-kafka": "^3.4.3",
+    "axios":"^0.18.0",
+    "jquery":"^3.3.1"
   }
 }
