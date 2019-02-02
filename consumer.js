@@ -12,7 +12,7 @@ var options = { autoCommit: false, fetchMaxWaitMs: 1000, fetchMaxBytes: 1024 * 1
 var consumer = new Consumer(client, topics, options);
 var offset = new Offset(client)
 */
-
+var axios = require('axios');
 var kafka = require('kafka-node'),
     Consumer = kafka.Consumer,
     Offset = kafka.Offset,
