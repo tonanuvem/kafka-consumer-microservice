@@ -65,28 +65,29 @@ return consumer.init().then(function () {
 
 /*
 OPÇÃO 1:
-
-const options = {
-  text: "Message from slack bot!!",
-};
-
-axios.post('<SLACK_WEBHOOK_URL>', JSON.stringify(options))
-.then((response) => {
-  console.log('SUCCEEDED: Sent slack webhook: \n', response.data);
-  resolve(response.data);
-})
-.catch((error) => {
-  console.log('FAILED: Send slack webhook', error);
-  reject(new Error('FAILED: Send slack webhook'));
-});
 */
+function postMSG_lida_para_o_slack(msg){
+    // format payload for slack
+    var sdata = formatForSlack(msg)
+    var url = 'https://hooks.slack.com/services/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'
+    axios.post(url, sdata)
+    .then((response) => {
+      console.log('SUCCEEDED: Sent slack webhook: \n', response.data);
+      resolve(response.data);
+    })
+    .catch((error) => {
+      console.log('FAILED: Send slack webhook', error);
+      reject(new Error('FAILED: Send slack webhook'));
+    });
+}
 
 /*
 OPÇÃO 1:
-*/
+
 function postMSG_lida_para_o_slack(msg){
   // format payload for slack
   var sdata = formatForSlack(msg)
+
   // log in console
   console.log(sdata)
   // post
@@ -109,6 +110,7 @@ function postMSG_lida_para_o_slack(msg){
     }
    });
 }
+*/
 /*
 * format for slack
 * change "username" per instructions
@@ -119,7 +121,7 @@ function formatForSlack(msg){
     "channel":'#async',
     "username":'app_kafka_consumer',
     "text": msg,
-    "icon_emoji":':ghost:'
+    "icon_emoji":':taxi:'
   };
   // return json string of payload
   return JSON.stringify(payload)
