@@ -7,7 +7,7 @@ const consumer = new Kafka.SimpleConsumer({"connectionString":"localhost:9092"})
 var data = function (messageSet) {
     messageSet.forEach(function (m) {
         var mensagem = m.message.value.toString('utf8');
-        postMSG(mensagem);
+        postMSG_lida_para_o_slack(mensagem);
     });
 };
 
@@ -38,7 +38,7 @@ axios.post('<SLACK_WEBHOOK_URL>', JSON.stringify(options))
 /*
 OPÇÃO 1:
 */
-function postMSG(msg){
+function postMSG_lida_para_o_slack(msg){
   // format payload for slack
   var sdata = formatForSlack(msg, chan)
   // log in console
