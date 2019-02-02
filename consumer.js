@@ -86,7 +86,7 @@ OPÇÃO 1:
 */
 function postMSG_lida_para_o_slack(msg){
   // format payload for slack
-  var sdata = formatForSlack(msg, chan)
+  var sdata = formatForSlack(msg)
   // log in console
   console.log(sdata)
   // post
