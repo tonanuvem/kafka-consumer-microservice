@@ -1,7 +1,27 @@
-//import axios from 'axios';
+var kafka = require('kafka-node'),
+    Consumer = kafka.Consumer,
+    client = new kafka.Client(),
+    consumer = new Consumer(client,
+        [{ topic: 'meu-topico', offset: 0}],
+        {
+            autoCommit: false
+        }
+    );
 
+consumer.on('message', function (message) {
+    console.log(message);
+});
+
+consumer.on('error', function (err) {
+    console.log('Error:',err);
+})
+
+consumer.on('offsetOutOfRange', function (err) {
+    console.log('offsetOutOfRange:',err);
+})
+
+/*import axios from 'axios';
 const Kafka = require('no-kafka');
-
 // Create an instance of the Kafka consumer
 const consumer = new Kafka.SimpleConsumer({"connectionString":"localhost:9092"})
 var data = function (messageSet) {
@@ -18,7 +38,7 @@ return consumer.init().then(function () {
     console.log(`Inicio... subscrevendo no topico`);
     return consumer.subscribe('meu-topico', data);
 });
-
+*/
 
 /*
 OPÇÃO 1:
