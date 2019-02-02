@@ -32,7 +32,7 @@ var kafka = require('kafka-node'),
 
 consumer.on('message', function (message) {
     console.log(message);
-    postMSG_lida_para_o_slack(message)
+    postMSG_lida_para_o_slack(message.value)
 });
 
 consumer.on('error', function (err) {
@@ -73,7 +73,7 @@ function postMSG_lida_para_o_slack(msg){
     axios.post(url, sdata)
     .then((response) => {
       console.log('SUCCEEDED: Sent slack webhook: \n', response.data);
-      resolve(response.data);
+      //resolve(response.data);
     })
     .catch((error) => {
       console.log('FAILED: Send slack webhook', error);
