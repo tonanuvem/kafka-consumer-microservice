@@ -11,7 +11,7 @@ var kafka = require('kafka-node'),
 //    consumer = new Consumer(client, topics, options);
 
     consumer = new Consumer(client,
-        [{ topic: topico, offset: 0}],
+        [{ topic: topico, offset: 'earliest'}],
         {
             autoCommit: false
         }
