@@ -30,9 +30,10 @@ consumer.on('error', function (err) {
 
 consumer.on('offsetOutOfRange', function (err) {
     console.log('Erro de : offsetOutOfRange:');
-    console.log('Executar o comando no Kafka para verififcar:');
-    console.log('\t bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list <broker-ip:9092> --topic <topic-name> --time -2 ');
-    exit();
+    client.auto.offset.reset='latest'
+    //console.log('Executar o comando no Kafka para verififcar:');
+    //console.log('\t bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list <broker-ip:9092> --topic <topic-name> --time -2 ');
+    //process.exit(1);
 })
 
 function postMSG_lida_para_o_slack(msg){
