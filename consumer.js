@@ -3,12 +3,14 @@ var kafka = require('kafka-node'),
     Consumer = kafka.Consumer,
     Offset = kafka.Offset,
     Client = kafka.KafkaClient,
-    topico = 'meu-topico',
-    broker = '192.168.10.133:9092',
-    client = new Client({ kafaHost: broker }),
+    topico = process.env.TOPICO, // topico = 'meu-topico',
+    broker = process.env.HOST + ":" + process.env.PORTA, // broker = '192.168.10.133:9092',
+    client = new Client({ kafaHost: broker });
 //    topics = [{ topic: topic, partition: 1 }, { topic: topic, partition: 0 }],
 //    options = { autoCommit: false, fetchMaxWaitMs: 1000, fetchMaxBytes: 1024 * 1024 },
 //    consumer = new Consumer(client, topics, options);
+
+    console.log("Servidor broker: " + broker);
 
     consumer = new Consumer(client,
         [{ topic: topico, offset: 'latest'}],
