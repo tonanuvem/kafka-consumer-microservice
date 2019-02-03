@@ -1,10 +1,15 @@
 FROM node:11.8-alpine
 
+ENV TOPICO=meu-topico
+ENV HOST=192.168.10.133
+ENV PORTA=9092
+
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 8080
+
+#EXPOSE 8080
 
 #ADD . /code
 #WORKDIR /code
