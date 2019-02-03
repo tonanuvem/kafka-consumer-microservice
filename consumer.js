@@ -38,7 +38,28 @@ consumer.on('offsetOutOfRange', function (err) {
     console.log('Erro de : offsetOutOfRange:');
     //console.log('Executar o comando no Kafka para verififcar:');
     //console.log('\t bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list <broker-ip:9092> --topic <topic-name> --time -2 ');
-    process.exit(1);
+    //process.exit(1);
+    topic.maxNum = 2;
+    offset.fetch([topico], function (err, offsets) {
+    if (err) {
+          return console.error(err);
+    }
+    var min = Math.min.apply(null, offsets[topico.topic][topico.partition]);
+    consumer.setOffset(topico.topic, topico.partition, min);
+    console.log('\t Consertando erro : fetched data from the smallest(oldest) offset');
+  });
+/*
+consumer.on('offsetOutOfRange', function (topic) {
+  topic.maxNum = 2;
+  offset.fetch([topic], function (err, offsets) {
+    if (err) {
+      return console.error(err);
+    }
+    var min = Math.min.apply(null, offsets[topic.topic][topic.partition]);
+    consumer.setOffset(topic.topic, topic.partition, min);
+  });
+});
+*/
 })
 
 function postMSG_lida_para_o_slack(msg){
