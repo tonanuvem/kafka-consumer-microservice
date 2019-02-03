@@ -17,7 +17,7 @@ var kafka = require('kafka-node'),
     ], function (err, data) {
         console.log('Error obtendo Fetch do Offset:',err);
     });
-    console.log("Offset fetched: " + offset);
+    console.log("Offset fetched: " + JSON.stringify(offset));
 
     consumer = new Consumer(client,
         [{ topic: topico, partition: 0, offset: 'latest'}],
