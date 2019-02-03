@@ -1,7 +1,6 @@
 var axios = require('axios');
 var kafka = require('kafka-node'),
     Consumer = kafka.Consumer,
-    Offset = kafka.Offset,
     Client = kafka.KafkaClient,
     topico = process.env.TOPICO, // topico = 'meu-topico',
     broker = process.env.HOST + ":" + process.env.PORTA, // broker = '192.168.10.133:9092',
@@ -11,11 +10,20 @@ var kafka = require('kafka-node'),
 //    consumer = new Consumer(client, topics, options);
 
     console.log("Servidor broker: " + broker);
+    // Codigo : https://www.npmjs.com/package/kafka-node#consumer
+    offset = new kafka.Offset(client);
+    offset.fetch([
+        { topic: topico, partition: 0, time: -2, maxNum: 1 }
+    ], function (err, data) {
+        console.log('Error obtendo Fetch do Offset:',err);
+    });
+    console.log("Offset fetched: " + offset);
 
     consumer = new Consumer(client,
         [{ topic: topico, partition: 0, offset: 'latest'}],
         { autoCommit: false, fromOffset: true }
     );
+
 
 consumer.on('message', function (message) {
     console.log(message);
