@@ -13,7 +13,7 @@ var kafka = require('kafka-node'),
     console.log("Servidor broker: " + broker);
 
     consumer = new Consumer(client,
-        [{ topic: topico, offset: 'latest'}],
+        [{ topic: topico, partition: 0, offset: 'latest'}],
         {
             autoCommit: false
         }
