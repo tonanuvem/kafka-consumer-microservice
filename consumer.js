@@ -15,9 +15,7 @@ var kafka = require('kafka-node'),
 
     consumer = new Consumer(client,
         [{ topic: topico, partition: 0, offset: 'latest'}],
-        {
-            autoCommit: false
-        }
+        { autoCommit: false, fromOffset: true }
     );
 
 consumer.on('message', function (message) {
