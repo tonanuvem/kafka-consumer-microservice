@@ -1,6 +1,7 @@
 var axios = require('axios');
 var kafka = require('kafka-node'),
     Consumer = kafka.Consumer,
+    Offset = kafka.Offset,
     Client = kafka.KafkaClient,
     topico = process.env.TOPICO, // topico = 'meu-topico',
     broker = process.env.HOST + ":" + process.env.PORTA, // broker = '192.168.10.133:9092',
@@ -10,14 +11,6 @@ var kafka = require('kafka-node'),
 //    consumer = new Consumer(client, topics, options);
 
     console.log("Servidor broker: " + broker);
-    // Codigo : https://www.npmjs.com/package/kafka-node#consumer
-    offset = new kafka.Offset(client);
-    offset.fetch([
-        { topic: topico, partition: 0, time: -2, maxNum: 1 }
-    ], function (err, data) {
-        console.log('Error obtendo Fetch do Offset:',err);
-    });
-    //console.log("Offset fetched: " + JSON.stringify(offset));
 
     consumer = new Consumer(client,
         [{ topic: topico, partition: 0, offset: 'latest'}],
@@ -33,29 +26,14 @@ consumer.on('message', function (message) {
 consumer.on('error', function (err) {
     console.log('Error:',err);
 })
-/*
-consumer.on('offsetOutOfRange', function (err) {
-    console.log('Erro de : offsetOutOfRange:');
-    //console.log('Executar o comando no Kafka para verififcar:');
-    //console.log('\t bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list <broker-ip:9092> --topic <topic-name> --time -2 ');
-    //process.exit(1);
-    topico.maxNum = 2;
-    offset.fetch([topico], function (err, offsets) {
-    if (err) {
-          return console.error(err);
-    }
-    var min = Math.min.apply(null, offsets[topico.topic][topico.partition]);
-    consumer.setOffset(topico.topic, topico.partition, min);
-    console.log('\t Consertando erro : fetched data from the smallest(oldest) offset');
-  });
-})
-*/
+
 consumer.on('offsetOutOfRange', function (topic) {
-  topic.maxNum = 2;
-  offset.fetch([topic], function (err, offsets) {
-    if (err) {
-      return console.error(err);
-    }
+    // Codigo : https://github.com/SOHU-Co/kafka-node/blob/master/example/consumer.js
+    topic.maxNum = 2;
+    offset.fetch([topic], function (err, offsets) {
+        if (err) {
+            return console.error(err);
+        }
     var min = Math.min.apply(null, offsets[topic.topic][topic.partition]);
     consumer.setOffset(topic.topic, topic.partition, min);
   });
