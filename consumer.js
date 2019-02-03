@@ -17,7 +17,7 @@ var kafka = require('kafka-node'),
     ], function (err, data) {
         console.log('Error obtendo Fetch do Offset:',err);
     });
-    console.log("Offset fetched: " + JSON.stringify(offset));
+    //console.log("Offset fetched: " + JSON.stringify(offset));
 
     consumer = new Consumer(client,
         [{ topic: topico, partition: 0, offset: 'latest'}],
@@ -39,7 +39,7 @@ consumer.on('offsetOutOfRange', function (err) {
     //console.log('Executar o comando no Kafka para verififcar:');
     //console.log('\t bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list <broker-ip:9092> --topic <topic-name> --time -2 ');
     //process.exit(1);
-    topic.maxNum = 2;
+    topico.maxNum = 2;
     offset.fetch([topico], function (err, offsets) {
     if (err) {
           return console.error(err);
