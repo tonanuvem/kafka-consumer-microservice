@@ -11,7 +11,7 @@ var kafka = require('kafka-node'),
 //    consumer = new Consumer(client, topics, options);
 
     consumer = new Consumer(client,
-        [{ topic: topico, offset: 'earliest'}],
+        [{ topic: topico, offset: 'latest'}],
         {
             autoCommit: false
         }
@@ -27,7 +27,9 @@ consumer.on('error', function (err) {
 })
 
 consumer.on('offsetOutOfRange', function (err) {
-    console.log('offsetOutOfRange:',err);
+    console.log('Erro de : offsetOutOfRange:');
+    console.log('Executar o comando no Kafka para verififcar:');
+    console.log('\t bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list <broker-ip:9092> --topic <topic-name> --time -2 ');
 })
 
 function postMSG_lida_para_o_slack(msg){
