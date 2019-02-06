@@ -1,7 +1,7 @@
 FROM node:11.8-alpine
 
 ENV TOPICO=meu-topico
-ENV HOST=192.168.10.133
+ENV HOST=0.0.0.0
 ENV PORTA=9092
 
 WORKDIR /usr/src/app
