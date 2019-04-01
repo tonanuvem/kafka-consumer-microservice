@@ -42,7 +42,7 @@ consumer.on('offsetOutOfRange', function (topic) {
 function postMSG_lida_para_o_slack(msg){
     // format payload for slack
     var sdata = formatForSlack(msg)
-    var url = 'https://hooks.slack.com/services/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'
+    var url = process.env.SLACK
     axios.post(url, sdata)
     .then((response) => {
       console.log('SUCCEEDED: Sent slack webhook: \n', response.data);
