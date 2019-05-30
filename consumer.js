@@ -55,8 +55,9 @@ function postMSG_lida_para_o_slack(msg){
 }
 
 function formatForSlack(msg){
+  var canal = process.env.CANAL
   var payload ={
-    "channel":'#async',
+    "channel":canal,
     "username":'app_kafka_consumer',
     "text": msg,
     "icon_emoji":':taxi:'
