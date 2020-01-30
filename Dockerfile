@@ -1,4 +1,4 @@
-FROM node:11.8-alpine
+FROM node:13.7-alpine3.10
 
 ENV TOPICO=meu-topico
 ENV HOST=0.0.0.0
