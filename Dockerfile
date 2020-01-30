@@ -8,7 +8,7 @@ ENV CANAL=lab-consumidor
 #exemplo: ENV CANAL=lab-testes
 
 WORKDIR /usr/src/app
-COPY package*.json ./
+COPY package.json ./
 RUN npm install
 COPY . .
 
