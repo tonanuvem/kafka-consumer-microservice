@@ -5,7 +5,7 @@ ENV HOST=0.0.0.0
 ENV PORTA=9092
 ENV SLACK=inserir-webhook
 ENV CANAL=lab-consumidor
-#exemplo: ENV CANAL=lab-testes
+#ENV CANAL=lab-testes
 
 WORKDIR /usr/src/app
 COPY package.json ./
