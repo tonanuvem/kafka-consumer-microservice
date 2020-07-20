@@ -49,7 +49,7 @@ function postMSG_lida(msg){
       //resolve(response.data);
     })
     .catch((error) => {
-      console.log('FAILED: Send slack webhook', error);
+      console.log('FAILED: Send webhook', error);
       reject(new Error('FAILED: Send webhook'));
     });
 }
