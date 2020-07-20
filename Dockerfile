@@ -3,7 +3,7 @@ FROM node:13.7-alpine3.10
 ENV TOPICO=meu-topico
 ENV HOST=0.0.0.0
 ENV PORTA=9092
-ENV SLACK=inserir-webhook
+ENV WEBHOOK=inserir-webhook
 ENV CANAL=lab-consumidor
 #ENV CANAL=lab-testes
 
