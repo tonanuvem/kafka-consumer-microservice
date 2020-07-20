@@ -20,7 +20,7 @@ var kafka = require('kafka-node'),
 
 consumer.on('message', function (message) {
     console.log(message);
-    postMSG_lida_para_o_slack(message.value)
+    postMSG_lida(message.value)
 });
 
 consumer.on('error', function (err) {
@@ -39,22 +39,22 @@ consumer.on('offsetOutOfRange', function (topic) {
   });
 });
 
-function postMSG_lida_para_o_slack(msg){
+function postMSG_lida(msg){
     // format payload for slack
-    var sdata = formatForSlack(msg)
-    var url = process.env.SLACK
+    var sdata = formatMSG(msg)
+    var url = process.env.WEBHOOK
     axios.post(url, sdata)
     .then((response) => {
-      console.log('SUCCEEDED: Sent slack webhook: \n', response.data);
+      console.log('SUCCEEDED: Sent webhook: \n', response.data);
       //resolve(response.data);
     })
     .catch((error) => {
       console.log('FAILED: Send slack webhook', error);
-      reject(new Error('FAILED: Send slack webhook'));
+      reject(new Error('FAILED: Send webhook'));
     });
 }
 
-function formatForSlack(msg){
+function formatMSG(msg){
   var canal = process.env.CANAL
   var payload ={
     "channel":canal,
