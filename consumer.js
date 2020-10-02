@@ -5,7 +5,7 @@ var kafka = require('kafka-node'),
     Client = kafka.KafkaClient,
     topico = process.env.TOPICO, // topico = 'meu-topico',
     broker = process.env.HOST + ":" + process.env.PORTA, // broker = '192.168.10.133:9092',
-    client = new Client({ kafaHost: broker });
+    client = new Client({ kafkaHost: broker });
 //    topics = [{ topic: topic, partition: 1, offset:'earliest' }, { topic: topic, partition: 0, offset:'latest' }],
 //    options = { autoCommit: false, fetchMaxWaitMs: 1000, fetchMaxBytes: 1024 * 1024 },
 //    consumer = new Consumer(client, topics, options);
