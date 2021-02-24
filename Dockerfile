@@ -1,6 +1,6 @@
 FROM node:13.7-alpine3.10
 
-ARG WEBHOOK_ARG=inserir
+ARG WEBHOOK_ARG=inserir_webhook
 
 ENV TOPICO=meu-topico
 ENV HOST=0.0.0.0
