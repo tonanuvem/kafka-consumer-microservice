@@ -40,7 +40,7 @@ consumer.on('offsetOutOfRange', function (topic) {
 });
 
 function postMSG_lida(msg){
-    // format payload for slack
+    // format payload for slack : branch
     var sdata = formatMSG(msg)
     var url = process.env.WEBHOOK
     axios.post(url, sdata)
