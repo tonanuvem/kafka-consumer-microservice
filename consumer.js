@@ -1,4 +1,4 @@
-var axios = require('axios');
+const { IncomingWebhook } = require("ms-teams-webhook");
 var kafka = require('kafka-node'),
     Consumer = kafka.Consumer,
     Offset = kafka.Offset,
@@ -40,28 +40,12 @@ consumer.on('offsetOutOfRange', function (topic) {
 });
 
 function postMSG_lida(msg){
-    // format payload for slack
-    var sdata = formatMSG(msg)
     var url = process.env.WEBHOOK
-    axios.post(url, sdata)
-    .then((response) => {
-      console.log('SUCCEEDED: Sent webhook: \n', response.data);
-      //resolve(response.data);
-    })
-    .catch((error) => {
-      console.log('FAILED: Send webhook', error);
-      reject(new Error('FAILED: Send webhook'));
-    });
-}
-
-function formatMSG(msg){
-  var canal = process.env.CANAL
-  var payload ={
-    "channel":canal,
-    "username":'app_kafka_consumer',
-    "text": msg,
-    "icon_emoji":':taxi:'
-  };
-  // return json string of payload
-  return JSON.stringify(payload)
+    // Initialize
+    const webhook = new IncomingWebhook(url);
+    (async () => {
+      await webhook.send({
+        'text': msg
+      });
+    })();
 }
