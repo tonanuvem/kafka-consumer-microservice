@@ -11,7 +11,7 @@ ENV CANAL=lab-consumidor
 
 WORKDIR /usr/src/app
 COPY package.json ./
-RUN npm install -g --silent
+RUN npm install
 COPY . .
 
 CMD [ "npm", "start" ]
