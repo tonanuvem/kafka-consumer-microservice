@@ -1,4 +1,4 @@
-FROM node:13.7-alpine3.10
+FROM node:22.9-alpine3.20
 
 ARG WEBHOOK_ARG=inserir_webhook
 
