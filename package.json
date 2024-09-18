@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "kafka-node": "^4.0.1",
-    "ms-teams-webhook": "^2.0.2"
+    "ms-teams-webhook": "^2.2.2"
   }
 }
