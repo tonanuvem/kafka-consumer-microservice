@@ -1,52 +1,69 @@
-// https://www.npmjs.com/package/ms-teams-webhook
+const { Kafka } = require("kafkajs");
 const { IncomingWebhook } = require("ms-teams-webhook");
-var kafka = require('kafka-node'),
-    Consumer = kafka.Consumer,
-    Offset = kafka.Offset,
-    Client = kafka.KafkaClient,
-    topico = process.env.TOPICO, // topico = 'meu-topico',
-    broker = process.env.HOST + ":" + process.env.PORTA, // broker = '192.168.10.133:9092',
-    client = new Client({ kafkaHost: broker });
-//    topics = [{ topic: topic, partition: 1, offset:'earliest' }, { topic: topic, partition: 0, offset:'latest' }],
-//    options = { autoCommit: false, fetchMaxWaitMs: 1000, fetchMaxBytes: 1024 * 1024 },
-//    consumer = new Consumer(client, topics, options);
 
-    console.log("Servidor broker: " + broker);
+const broker = `${process.env.HOST}:${process.env.PORTA}`;
+const topico = process.env.TOPICO;
 
-    consumer = new Consumer(client,
-        [{ topic: topico, partition: 0, offset: 'latest'}],
-        { autoCommit: false, fromOffset: true }
-    );
+console.log("Servidor broker:", broker);
+console.log("Topico:", topico);
 
-
-consumer.on('message', function (message) {
-    console.log(message);
-    postMSG_lida(message.value)
+const kafka = new Kafka({
+    clientId: "kafka-consumer-microservice",
+    brokers: [broker]
 });
 
-consumer.on('error', function (err) {
-    console.log('Error:',err);
-})
-
-consumer.on('offsetOutOfRange', function (topic) {
-    // Codigo : https://github.com/SOHU-Co/kafka-node/blob/master/example/consumer.js
-    topic.maxNum = 2;
-    offset.fetch([topic], function (err, offsets) {
-        if (err) {
-            return console.error(err);
-        }
-    var min = Math.min.apply(null, offsets[topic.topic][topic.partition]);
-    consumer.setOffset(topic.topic, topic.partition, min);
-  });
+const consumer = kafka.consumer({
+    groupId: process.env.GROUP_ID || "grupo-1"
 });
 
-function postMSG_lida(msg){
-    var url = process.env.WEBHOOK
-    // Initialize
-    const webhook = new IncomingWebhook(url);
-    (async () => {
-      await webhook.send({
-        'text': msg
-      });
-    })();
+async function iniciar() {
+
+    try {
+        await consumer.connect();
+        console.log("Conectado ao Kafka.");
+        await consumer.subscribe({
+            topic: topico,
+            fromBeginning: false
+        });
+
+        console.log("Consumindo mensagens...");
+
+        await consumer.run({
+            autoCommit: true,
+            eachMessage: async ({ topic, partition, message }) => {
+                const msg = message.value.toString();
+                console.log({
+                    topic,
+                    partition,
+                    offset: message.offset,
+                    value: msg
+                });
+                await postMSG_lida(msg);
+            }
+
+        });
+    } catch (err) {
+        console.error("Erro:", err);
+    }
 }
+
+async function postMSG_lida(msg) {
+    const webhook = new IncomingWebhook(process.env.WEBHOOK);
+    await webhook.send({
+        text: msg
+    });
+}
+
+process.on("SIGINT", async () => {
+    console.log("Encerrando consumidor...");
+    await consumer.disconnect();
+    process.exit(0);
+
+});
+
+process.on("SIGTERM", async () => {
+    await consumer.disconnect();
+    process.exit(0);
+});
+
+iniciar();
