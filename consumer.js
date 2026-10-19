@@ -4,7 +4,7 @@ const broker = `${process.env.HOST}:${process.env.PORTA}`;
 const topico = process.env.TOPICO;
 
 const ICONE = "https://cdn-icons-png.magnific.com/512/15716/15716953.png";
-#const ICONE = "https://cdn4.iconfinder.com/data/icons/pop-scenes/1000/workspace___work_from_home_laptop_computer_drink_beverage-1024.png";
+//const ICONE = "https://cdn4.iconfinder.com/data/icons/pop-scenes/1000/workspace___work_from_home_laptop_computer_drink_beverage-1024.png";
 
 console.log("Servidor broker:", broker);
 console.log("Topico:", topico);
