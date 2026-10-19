@@ -10,8 +10,8 @@ ENV CANAL=lab-consumidor
 #ENV CANAL=lab-testes
 
 WORKDIR /usr/src/app
-COPY package.json ./
-RUN npm install
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
 COPY . .
 
 CMD [ "npm", "start" ]
